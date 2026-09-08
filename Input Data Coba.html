@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PPDB Online - PKBM Bahtera Dua</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Plus Jakarta Sans', sans-serif; }
+    /* Style cetak halaman rekap */
+    @media print {
+      aside, header button, #mobile-header { display: none !important; }
+      main { overflow: visible !important; padding: 0 !important; }
+      body { background: white !important; }
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 flex flex-col md:flex-row h-screen overflow-hidden">
+
+  <!-- ================= TOPBAR MOBILE ================= -->
+  <header id="mobile-header" class="md:hidden bg-white border-b border-slate-200 px-4 py-3 flex items-center justify-between z-20">
+    <div class="flex items-center gap-2.5">
+      <!-- LOGO PKBM BAHTERA DUA (MOBILE) -->
+      <img src="https://scontent-cgk1-2.cdninstagram.com/v/t51.2885-19/323290582_700129298410843_7131217882052032534_n.jpg?stp=dst-jpg_s206x206_tt6&_nc_cat=108&ccb=7-5&_nc_sid=bf7eb4&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLnd3dy4xMDgwLkMzIn0%3D&_nc_ohc=TggKvMgtEuUQ7kNvwFHePjY&_nc_oc=AdoiJpJt0480pnbCdnzhfw2E85Dng4UchWPB5yHSbswDIzPDZ8Sf6EwvBDkbu1Ud3Ks&_nc_zt=24&_nc_ht=scontent-cgk1-2.cdninstagram.com&_nc_ss=7baaf&oh=00_AQIpYh-zgBlFYqx7EgJXq_T5aFP4mmWTWHGl1yAaurXfmg&oe=6AA57260" alt="Logo PKBM Bahtera Dua" class="w-9 h-9 object-contain rounded-lg">
+      <div>
+        <h1 class="font-bold text-slate-900 text-sm leading-tight">PPDB Online</h1>
+        <p class="text-[10px] text-blue-600 font-semibold">PKBM Bahtera Dua</p>
+      </div>
+    </div>
+    <button onclick="toggleSidebar()" class="p-2 text-slate-600 hover:bg-slate-100 rounded-lg transition focus:outline-none">
+      <span class="text-xl">☰</span>
+    </button>
+  </header>
+
+  <!-- Overlay Latar Belakang Gelap Mobile -->
+  <div id="sidebar-overlay" onclick="toggleSidebar()" class="fixed inset-0 bg-slate-900/50 z-30 hidden md:hidden transition-opacity"></div>
+
+  <!-- ================= SIDEBAR NAVIGASI ================= -->
+  <aside id="sidebar" class="fixed inset-y-0 left-0 w-64 bg-white border-r border-slate-200 p-5 flex flex-col justify-between z-40 transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out md:static md:z-auto">
+    <div>
+      <div class="flex items-center justify-between mb-8 px-2">
+        <div class="flex items-center gap-3">
+          <!-- LOGO PKBM BAHTERA DUA (DESKTOP) -->
+          <img src="https://scontent-cgk1-2.cdninstagram.com/v/t51.2885-19/323290582_700129298410843_7131217882052032534_n.jpg?stp=dst-jpg_s206x206_tt6&_nc_cat=108&ccb=7-5&_nc_sid=bf7eb4&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLnd3dy4xMDgwLkMzIn0%3D&_nc_ohc=TggKvMgtEuUQ7kNvwFHePjY&_nc_oc=AdoiJpJt0480pnbCdnzhfw2E85Dng4UchWPB5yHSbswDIzPDZ8Sf6EwvBDkbu1Ud3Ks&_nc_zt=24&_nc_ht=scontent-cgk1-2.cdninstagram.com&_nc_ss=7baaf&oh=00_AQIpYh-zgBlFYqx7EgJXq_T5aFP4mmWTWHGl1yAaurXfmg&oe=6AA57260" alt="Logo PKBM Bahtera Dua" class="w-11 h-11 object-contain rounded-xl shadow-sm">
+          <div>
+            <h1 class="font-bold text-slate-900 text-base leading-tight">PPDB Online</h1>
+            <p class="text-xs text-blue-600 font-semibold">PKBM Bahtera Dua</p>
+          </div>
+        </div>
+        <button onclick="toggleSidebar()" class="md:hidden text-slate-400 hover:text-slate-600 p-1">
+          ✕
+        </button>
+      </div>
+
+      <nav class="space-y-1.5">
+        <button id="nav-dashboard" onclick="switchPage('dashboard')" class="w-full flex items-center gap-3 px-4 py-3 text-blue-600 bg-blue-50 font-semibold rounded-xl text-left transition">
+          <span>📊</span> Dashboard
+        </button>
+        <button id="nav-pendaftaran" onclick="switchPage('pendaftaran')" class="w-full flex items-center gap-3 px-4 py-3 text-slate-500 hover:bg-slate-100 font-semibold rounded-xl text-left transition">
+          <span>📝</span> Form Pendaftaran
+        </button>
+        <button id="nav-search" onclick="switchPage('search')" class="w-full flex items-center gap-3 px-4 py-3 text-slate-500 hover:bg-slate-100 font-semibold rounded-xl text-left transition">
+          <span>🔍</span> Cek Calon Siswa
+        </button>
+        <button id="nav-rekap" onclick="switchPage('rekap')" class="w-full flex items-center gap-3 px-4 py-3 text-slate-500 hover:bg-slate-100 font-semibold rounded-xl text-left transition">
+          <span>📋</span> Rekap Pendaftar
+        </button>
+      </nav>
+    </div>
+
+    <div class="bg-slate-50 p-3 rounded-xl border border-slate-100 flex items-center gap-3">
+      <div class="w-3 h-3 rounded-full bg-emerald-500 animate-pulse"></div>
+      <div class="overflow-hidden">
+        <h4 class="text-xs font-bold text-slate-800">Sistem Terkoneksi</h4>
+        <p class="text-[10px] text-slate-400 truncate">Google Sheets Sync</p>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ================= KONTEN UTAMA ================= -->
+  <main class="flex-1 overflow-y-auto p-4 sm:p-6 md:p-8">
+
+    <!-- ---------------- 1. MENU DASHBOARD ---------------- -->
+    <section id="page-dashboard">
+      <header class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6 sm:mb-8">
+        <div>
+          <h1 class="text-xl sm:text-2xl font-bold text-slate-900">Dashboard PPDB</h1>
+          <p class="text-xs sm:text-sm text-slate-500">Ringkasan pendaftaran peserta didik baru PKBM Bahtera Dua</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <button onclick="switchPage('pendaftaran')" class="bg-blue-600 hover:bg-blue-700 text-white px-3.5 py-2 rounded-xl text-xs font-semibold transition shadow-md shadow-blue-100">
+            ➕ Daftar Siswa Baru
+          </button>
+          <button onclick="fetchData()" class="bg-slate-100 border border-slate-200 px-3.5 py-2 rounded-xl text-xs font-semibold text-slate-700 hover:bg-slate-200 transition">
+            🔄 Refresh
+          </button>
+        </div>
+      </header>
+
+      <div class="bg-gradient-to-r from-blue-600 to-indigo-700 text-white p-5 sm:p-6 rounded-2xl shadow-sm mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div>
+          <h3 class="text-lg font-bold">Pendaftaran Siswa Baru PKBM Bahtera Dua Telah Dibuka!</h3>
+          <p class="text-xs sm:text-sm text-blue-100 mt-1">Lengkapi formulir pendaftaran secara online untuk bergabung dengan PKBM Bahtera Dua tahun ini.</p>
+        </div>
+        <button onclick="switchPage('pendaftaran')" class="bg-white text-blue-800 hover:bg-blue-50 px-4 py-2.5 rounded-xl text-xs font-bold transition shadow whitespace-nowrap">
+          📝 Isi Formulir Sekarang
+        </button>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-5 mb-6 sm:mb-8">
+        <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-100 shadow-sm">
+          <p class="text-xs font-semibold text-slate-400 uppercase">Total Pendaftar</p>
+          <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 mt-1 sm:mt-2" id="stat-total">0</h2>
+        </div>
+        <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-100 shadow-sm">
+          <p class="text-xs font-semibold text-slate-400 uppercase">Database Server</p>
+          <h2 class="text-2xl sm:text-3xl font-bold text-blue-600 mt-1 sm:mt-2">Google Sheets</h2>
+        </div>
+        <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-100 shadow-sm">
+          <p class="text-xs font-semibold text-slate-400 uppercase">Status Pendaftaran</p>
+          <h2 class="text-2xl sm:text-3xl font-bold text-emerald-600 mt-1 sm:mt-2">Aktif</h2>
+        </div>
+      </div>
+
+      <div class="bg-white p-4 sm:p-6 rounded-2xl border border-slate-100 shadow-sm">
+        <h3 class="text-base sm:text-lg font-bold text-slate-900 mb-4">5 Pendaftar Terbaru</h3>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse min-w-[500px]">
+            <thead>
+              <tr class="border-b border-slate-100 text-xs font-semibold text-slate-400 uppercase">
+                <th class="py-3 px-2">Nama & NISN</th>
+                <th class="py-3 px-2">Sekolah Asal</th>
+                <th class="py-3 px-2">Orang Tua / Wali</th>
+                <th class="py-3 px-2">Waktu Daftar</th>
+              </tr>
+            </thead>
+            <tbody id="dashboard-recent-table" class="divide-y divide-slate-100 text-xs sm:text-sm">
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------------- 2. MENU FORM PENDAFTARAN ---------------- -->
+    <section id="page-pendaftaran" class="hidden">
+      <header class="mb-6 sm:mb-8">
+        <h1 class="text-xl sm:text-2xl font-bold text-slate-900">Formulir Pendaftaran PKBM Bahtera Dua</h1>
+        <p class="text-xs sm:text-sm text-slate-500">Isi data calon peserta didik baru dengan benar dan lengkap</p>
+      </header>
+
+      <div class="max-w-2xl bg-white p-4 sm:p-6 rounded-2xl border border-slate-100 shadow-sm">
+        <form id="pendudukForm" class="space-y-4">
+          
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 mb-1">Nama Lengkap Siswa</label>
+            <input type="text" id="nama_lengkap" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Masukkan nama lengkap calon siswa" required>
+          </div>
+
+          <!-- INPUT NISN (TEPAT 10 DIGIT) -->
+          <div>
+            <div class="flex justify-between items-center mb-1">
+              <label class="block text-xs font-semibold text-slate-600">NISN (Harus Tepat 10 Digit)</label>
+              <span id="nisn-counter" class="text-[11px] font-semibold text-slate-400">0/10</span>
+            </div>
+            <input type="text" id="nisn" minlength="10" maxlength="10" oninput="validateNisnInput(this)" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Contoh: 0051234567" inputmode="numeric" required>
+            <p id="nisn-error" class="hidden text-xs text-rose-500 font-semibold mt-1">⚠️ NISN harus berjumlah tepat 10 digit angka!</p>
+          </div>
+
+          <!-- INPUT NIK (TEPAT 16 DIGIT) -->
+          <div>
+            <div class="flex justify-between items-center mb-1">
+              <label class="block text-xs font-semibold text-slate-600">NIK Siswa (Harus Tepat 16 Digit)</label>
+              <span id="nik-counter" class="text-[11px] font-semibold text-slate-400">0/16</span>
+            </div>
+            <input type="text" id="nik" minlength="16" maxlength="16" oninput="validateNikInput(this)" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Contoh: 3201234567890001" inputmode="numeric" required>
+            <p id="nik-error" class="hidden text-xs text-rose-500 font-semibold mt-1">⚠️ NIK harus berjumlah tepat 16 digit angka!</p>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-semibold text-slate-600 mb-1">Tempat Lahir</label>
+              <input type="text" id="tempat_lahir" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Kota / Kabupaten" required>
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-600 mb-1">Tanggal Lahir</label>
+              <input type="date" id="tanggal_lahir" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-semibold text-slate-600 mb-1">Jenis Kelamin</label>
+              <select id="jenis_kelamin" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                <option value="">-- Pilih Jenis Kelamin --</option>
+                <option value="Laki-laki">Laki-laki</option>
+                <option value="Perempuan">Perempuan</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-600 mb-1">Sekolah Asal</label>
+              <input type="text" id="sekolah_asal" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Contoh: SD Negeri 1 / SMPN 2" required>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-semibold text-slate-600 mb-1">Nama Orang Tua / Wali</label>
+              <input type="text" id="nama_ortu" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Nama Ayah / Ibu / Wali" required>
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-600 mb-1">No. HP / WhatsApp Aktif</label>
+              <input type="text" id="no_hp" oninput="this.value = this.value.replace(/[^0-9]/g, '');" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Contoh: 081234567890" inputmode="numeric" required>
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 mb-1">Alamat Tempat Tinggal</label>
+            <textarea id="alamat_lengkap" rows="3" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Jalan, RT/RW, Desa/Kelurahan, Kecamatan" required></textarea>
+          </div>
+
+          <button type="submit" id="btnSubmit" class="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm rounded-xl transition shadow-md shadow-blue-200">
+            🚀 Kirim Pendaftaran PPDB
+          </button>
+        </form>
+      </div>
+    </section>
+
+    <!-- ---------------- 3. MENU CEK CALON SISWA ---------------- -->
+    <section id="page-search" class="hidden">
+      <header class="mb-6 sm:mb-8">
+        <h1 class="text-xl sm:text-2xl font-bold text-slate-900">Cek Data Calon Siswa</h1>
+        <p class="text-xs sm:text-sm text-slate-500">Cari berdasarkan nama siswa atau NISN pada daftar PPDB PKBM Bahtera Dua</p>
+      </header>
+
+      <div class="max-w-xl mb-6">
+        <div class="relative">
+          <input type="text" id="searchInput" onkeyup="searchData()" placeholder="Ketik Nama Siswa atau NISN..." class="w-full pl-10 pr-4 py-2.5 sm:py-3 bg-white border border-slate-200 rounded-xl text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+          <span class="absolute left-3.5 top-2.5 sm:top-3.5 text-slate-400">🔍</span>
+        </div>
+      </div>
+
+      <div class="bg-white p-4 sm:p-6 rounded-2xl border border-slate-100 shadow-sm">
+        <h3 class="text-base sm:text-lg font-bold text-slate-900 mb-4">Hasil Pencarian</h3>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse min-w-[500px]">
+            <thead>
+              <tr class="border-b border-slate-100 text-xs font-semibold text-slate-400 uppercase">
+                <th class="py-3 px-2">Nama & NISN</th>
+                <th class="py-3 px-2">Sekolah Asal</th>
+                <th class="py-3 px-2">Orang Tua</th>
+                <th class="py-3 px-2">No. HP</th>
+              </tr>
+            </thead>
+            <tbody id="search-results-table" class="divide-y divide-slate-100 text-xs sm:text-sm">
+              <tr>
+                <td colspan="4" class="py-4 text-center text-slate-400">Ketik nama atau NISN di kolom pencarian.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------------- 4. MENU REKAP PENDAFTAR ---------------- -->
+    <section id="page-rekap" class="hidden">
+      <header class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6 sm:mb-8">
+        <div>
+          <h1 class="text-xl sm:text-2xl font-bold text-slate-900">Rekap Pendaftar PKBM Bahtera Dua</h1>
+          <p class="text-xs sm:text-sm text-slate-500">Daftar seluruh calon siswa yang terdaftar di PPDB PKBM Bahtera Dua</p>
+        </div>
+        <button onclick="window.print()" class="w-fit bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-2 rounded-xl text-xs transition shadow-sm">
+          🖨️ Cetak Rekap PPDB
+        </button>
+      </header>
+
+      <div class="bg-white p-4 sm:p-6 rounded-2xl border border-slate-100 shadow-sm">
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse min-w-[750px]">
+            <thead>
+              <tr class="border-b border-slate-100 text-xs font-semibold text-slate-400 uppercase">
+                <th class="py-3 px-2">No</th>
+                <th class="py-3 px-2">Nama Siswa</th>
+                <th class="py-3 px-2">NISN & NIK</th>
+                <th class="py-3 px-2">TTL / JK</th>
+                <th class="py-3 px-2">Sekolah Asal</th>
+                <th class="py-3 px-2">Orang Tua / No. HP</th>
+                <th class="py-3 px-2">Alamat</th>
+              </tr>
+            </thead>
+            <tbody id="rekap-full-table" class="divide-y divide-slate-100 text-xs sm:text-sm">
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ================= JAVASCRIPT LOGIC ================= -->
+  <script>
+    // MASUKKAN URL WEB APP GOOGLE APPS SCRIPT
+    const API_URL = "https://script.google.com/macros/s/AKfycbwjLCR4T4hzEM3duAdLrzLjE07AdnoeoJ7-jnCQl6EzkWJO1rR7gjnAKE6_IBmIbmIr/exec";
+
+    let globalData = []; 
+
+    // VALIDASI NISN REALTIME (10 DIGIT)
+    function validateNisnInput(input) {
+      input.value = input.value.replace(/[^0-9]/g, '');
+      const count = input.value.length;
+      const counterEl = document.getElementById('nisn-counter');
+      const errorEl = document.getElementById('nisn-error');
+
+      counterEl.innerText = `${count}/10`;
+
+      if (count === 10) {
+        errorEl.classList.add('hidden');
+        input.classList.remove('border-rose-500', 'focus:ring-rose-500');
+        input.classList.add('border-blue-500', 'focus:ring-blue-500');
+        counterEl.className = "text-[11px] font-bold text-blue-600";
+      } else if (count > 0 && count < 10) {
+        errorEl.classList.remove('hidden');
+        input.classList.remove('border-slate-200', 'border-blue-500', 'focus:ring-blue-500');
+        input.classList.add('border-rose-500', 'focus:ring-rose-500');
+        counterEl.className = "text-[11px] font-bold text-rose-500";
+      } else {
+        errorEl.classList.add('hidden');
+        input.classList.remove('border-rose-500', 'border-blue-500', 'focus:ring-rose-500');
+        input.classList.add('border-slate-200', 'focus:ring-blue-500');
+        counterEl.className = "text-[11px] font-semibold text-slate-400";
+      }
+    }
+
+    // VALIDASI NIK REALTIME (16 DIGIT)
+    function validateNikInput(input) {
+      input.value = input.value.replace(/[^0-9]/g, '');
+      const count = input.value.length;
+      const counterEl = document.getElementById('nik-counter');
+      const errorEl = document.getElementById('nik-error');
+
+      counterEl.innerText = `${count}/16`;
+
+      if (count === 16) {
+        errorEl.classList.add('hidden');
+        input.classList.remove('border-rose-500', 'focus:ring-rose-500');
+        input.classList.add('border-blue-500', 'focus:ring-blue-500');
+        counterEl.className = "text-[11px] font-bold text-blue-600";
+      } else if (count > 0 && count < 16) {
+        errorEl.classList.remove('hidden');
+        input.classList.remove('border-slate-200', 'border-blue-500', 'focus:ring-blue-500');
+        input.classList.add('border-rose-500', 'focus:ring-rose-500');
+        counterEl.className = "text-[11px] font-bold text-rose-500";
+      } else {
+        errorEl.classList.add('hidden');
+        input.classList.remove('border-rose-500', 'border-blue-500', 'focus:ring-rose-500');
+        input.classList.add('border-slate-200', 'focus:ring-blue-500');
+        counterEl.className = "text-[11px] font-semibold text-slate-400";
+      }
+    }
+
+    // TOGGLE SIDEBAR MOBILE
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      const overlay = document.getElementById('sidebar-overlay');
+      const isOpen = !sidebar.classList.contains('-translate-x-full');
+      
+      if (isOpen) {
+        sidebar.classList.add('-translate-x-full');
+        overlay.classList.add('hidden');
+      } else {
+        sidebar.classList.remove('-translate-x-full');
+        overlay.classList.remove('hidden');
+      }
+    }
+
+    // AMBIL DATA DARI GOOGLE SHEETS
+    async function fetchData() {
+      try {
+        const res = await fetch(API_URL);
+        const result = await res.json();
+
+        if (result.status === "success") {
+          globalData = result.data || [];
+          document.getElementById('stat-total').innerText = result.total;
+          
+          renderDashboardRecent();
+          renderRekapFull();
+        }
+      } catch (err) {
+        console.error("Gagal terhubung ke API Server PPDB PKBM Bahtera Dua");
+      }
+    }
+
+    // RENDER DASHBOARD RECENT
+    function renderDashboardRecent() {
+      const tbody = document.getElementById('dashboard-recent-table');
+      const recent = globalData.slice(-5).reverse();
+
+      if (recent.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="4" class="py-4 text-center text-slate-400">Belum ada calon siswa yang mendaftar.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = recent.map(item => `
+        <tr class="hover:bg-slate-50 transition">
+          <td class="py-3 px-2">
+            <p class="font-bold text-slate-800">${item.nama_lengkap}</p>
+            <p class="text-[11px] font-mono text-blue-700 bg-blue-50 px-2 py-0.5 rounded w-fit">NISN: ${item.nisn ? item.nisn.replace("'", "") : '-'}</p>
+          </td>
+          <td class="py-3 px-2 text-xs font-medium text-slate-700">${item.sekolah_asal || '-'}</td>
+          <td class="py-3 px-2 text-xs text-slate-700">${item.nama_ortu || '-'}</td>
+          <td class="py-3 px-2 text-xs text-slate-400">${item.waktu_input || '-'}</td>
+        </tr>
+      `).join('');
+    }
+
+    // RENDER REKAP PENDAFTAR FULL
+    function renderRekapFull() {
+      const tbody = document.getElementById('rekap-full-table');
+
+      if (globalData.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="7" class="py-4 text-center text-slate-400">Belum ada calon siswa yang mendaftar.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = globalData.map((item, index) => `
+        <tr class="hover:bg-slate-50 transition">
+          <td class="py-3 px-2 font-bold text-slate-400">${index + 1}</td>
+          <td class="py-3 px-2 font-bold text-slate-800">${item.nama_lengkap}</td>
+          <td class="py-3 px-2 font-mono text-xs">
+            <span class="block text-blue-700 font-semibold">NISN: ${item.nisn ? item.nisn.replace("'", "") : '-'}</span>
+            <span class="block text-slate-400 text-[10px]">NIK: ${item.nik ? item.nik.replace("'", "") : '-'}</span>
+          </td>
+          <td class="py-3 px-2 text-xs">
+            <p>${item.tempat_lahir}, ${item.tanggal_lahir}</p>
+            <span class="text-[10px] text-slate-400">${item.jenis_kelamin || '-'}</span>
+          </td>
+          <td class="py-3 px-2 text-xs font-semibold text-slate-700">${item.sekolah_asal || '-'}</td>
+          <td class="py-3 px-2 text-xs">
+            <p class="font-medium text-slate-800">${item.nama_ortu || '-'}</p>
+            <p class="text-[11px] text-blue-600 font-mono">${item.no_hp || '-'}</p>
+          </td>
+          <td class="py-3 px-2 text-xs text-slate-500 max-w-xs truncate">${item.alamat_lengkap}</td>
+        </tr>
+      `).join('');
+    }
+
+    // PENCARIAN DATA
+    function searchData() {
+      const keyword = document.getElementById('searchInput').value.toLowerCase();
+      const tbody = document.getElementById('search-results-table');
+
+      if (keyword.trim() === "") {
+        tbody.innerHTML = `<tr><td colspan="4" class="py-4 text-center text-slate-400">Ketik nama atau NISN di kolom pencarian.</td></tr>`;
+        return;
+      }
+
+      const filtered = globalData.filter(item => 
+        (item.nama_lengkap && item.nama_lengkap.toLowerCase().includes(keyword)) ||
+        (item.nisn && item.nisn.includes(keyword))
+      );
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="4" class="py-4 text-center text-rose-500">Data calon siswa "${keyword}" tidak ditemukan.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = filtered.map(item => `
+        <tr class="hover:bg-slate-50 transition">
+          <td class="py-3 px-2">
+            <p class="font-bold text-slate-800">${item.nama_lengkap}</p>
+            <p class="text-[11px] font-mono text-blue-700 bg-blue-50 px-2 py-0.5 rounded w-fit">NISN: ${item.nisn ? item.nisn.replace("'", "") : '-'}</p>
+          </td>
+          <td class="py-3 px-2 text-xs font-medium text-slate-700">${item.sekolah_asal || '-'}</td>
+          <td class="py-3 px-2 text-xs font-medium text-slate-700">${item.nama_ortu || '-'}</td>
+          <td class="py-3 px-2 text-xs text-blue-600 font-mono">${item.no_hp || '-'}</td>
+        </tr>
+      `).join('');
+    }
+
+    // SUBMIT FORM PENDAFTARAN PPDB
+    document.getElementById('pendudukForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const nisnVal = document.getElementById('nisn').value;
+      const nikVal = document.getElementById('nik').value;
+
+      // VALIDASI TEPAT DIGIT NISN & NIK
+      if (nisnVal.length !== 10) {
+        alert(`❌ GAGAL PENDAFTARAN!\nNISN harus berjumlah TEPAT 10 DIGIT.\nSaat ini NISN yang dimasukkan: ${nisnVal.length} digit.`);
+        document.getElementById('nisn').focus();
+        return;
+      }
+
+      if (nikVal.length !== 16) {
+        alert(`❌ GAGAL PENDAFTARAN!\nNIK harus berjumlah TEPAT 16 DIGIT.\nSaat ini NIK yang dimasukkan: ${nikVal.length} digit.`);
+        document.getElementById('nik').focus();
+        return;
+      }
+
+      const btn = document.getElementById('btnSubmit');
+      btn.disabled = true;
+      btn.innerText = "Mengirim Data PPDB...";
+
+      const payload = {
+        nama_lengkap: document.getElementById('nama_lengkap').value,
+        nisn: nisnVal,
+        nik: nikVal,
+        tempat_lahir: document.getElementById('tempat_lahir').value,
+        tanggal_lahir: document.getElementById('tanggal_lahir').value,
+        jenis_kelamin: document.getElementById('jenis_kelamin').value,
+        sekolah_asal: document.getElementById('sekolah_asal').value,
+        nama_ortu: document.getElementById('nama_ortu').value,
+        no_hp: document.getElementById('no_hp').value,
+        alamat_lengkap: document.getElementById('alamat_lengkap').value,
+      };
+
+      try {
+        const res = await fetch(API_URL, {
+          method: 'POST',
+          body: JSON.stringify(payload)
+        });
+
+        const result = await res.json();
+
+        if (result.status === "success") {
+          alert("🎉 Pendaftaran PPDB PKBM Bahtera Dua Berhasil!\nData calon peserta didik telah tersimpan.");
+          document.getElementById('pendudukForm').reset();
+          document.getElementById('nisn-counter').innerText = "0/10";
+          document.getElementById('nik-counter').innerText = "0/16";
+          fetchData(); 
+          switchPage('rekap');
+        } else {
+          alert("Gagal Pendaftaran: " + result.message);
+        }
+      } catch (err) {
+        alert("Terjadi kesalahan saat terhubung ke server PPDB!");
+      } finally {
+        btn.disabled = false;
+        btn.innerText = "🚀 Kirim Pendaftaran PPDB";
+      }
+    });
+
+    // SWITCH PAGE NAVIGASI
+    function switchPage(pageName) {
+      const pages = ['dashboard', 'pendaftaran', 'search', 'rekap'];
+      
+      pages.forEach(p => {
+        document.getElementById(`page-${p}`).classList.add('hidden');
+        document.getElementById(`nav-${p}`).className = "w-full flex items-center gap-3 px-4 py-3 text-slate-500 hover:bg-slate-100 font-semibold rounded-xl text-left transition";
+      });
+
+      document.getElementById(`page-${pageName}`).classList.remove('hidden');
+      document.getElementById(`nav-${pageName}`).className = "w-full flex items-center gap-3 px-4 py-3 text-blue-600 bg-blue-50 font-semibold rounded-xl text-left transition";
+
+      if (window.innerWidth < 768) {
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('sidebar-overlay');
+        sidebar.classList.add('-translate-x-full');
+        overlay.classList.add('hidden');
+      }
+    }
+
+    // Load data awal dari server
+    fetchData();
+  </script>
+</body>
+</html>
